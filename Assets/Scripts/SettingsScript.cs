@@ -39,13 +39,12 @@ public class SettingsScript : MonoBehaviour {
 	}
  
     // member functions
-    public void MouseLookToggle(bool On)
+    public void MouseLookToggle(bool val)
     {
-        Debug.Log("Mouse Look Toggle: " + On);
-        HeadControls.MouseLook = On;
+        HeadControls.MouseLook = val;
 
-        // 
-        if (!On)
+        // if mouse look is off (orbital movement)
+        if (!val)
         {
             _headControls.LookAtPlanet();
         }

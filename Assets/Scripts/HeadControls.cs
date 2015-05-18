@@ -10,13 +10,12 @@ public class HeadControls : MonoBehaviour {
     public static bool MouseLook = false;
 
     // handles
-    public Transform Planet;
+    public Transform target;
 
-    // private variables
- 
-    // public variables
-    public float Sensivity;
- 
+    // editor variables
+    [SerializeField] private float _sensivity;
+    [SerializeField] private float _distance;
+    [SerializeField] private float _smooth;     // not used yet
  
     //======================================
     // Function Definitions
@@ -34,32 +33,34 @@ public class HeadControls : MonoBehaviour {
 	
 	}
 	
-	void FixedUpdate ()
+	void LateUpdate ()
     {
 
-        float dirX = Input.GetAxis("Horizontal") * Sensivity;
-        float dirY = Input.GetAxis("Vertical") * Sensivity;
-        Vector3 dir = new Vector3(dirX, dirY, 0);
-        //Debug.Log(dir);
+        float dirY = Input.GetAxis("Horizontal");
+        float dirX = Input.GetAxis("Vertical");
+
+        Vector3 dir = MouseLook ? new Vector3(-dirX, dirY, 0) : new Vector3(dirX, dirY, 0);
+
+        dir *= Time.deltaTime * _sensivity;
 
         // Mouse Look
 	    if (MouseLook)
 	    {
-	        transform.Rotate(dir * Time.deltaTime);
+	        transform.Rotate(dir, Space.Self);
 	    }
 
         // Orbit Around
 	    else
 	    {
-	        transform.LookAt(Planet);
-	        transform.Translate(dir*Time.deltaTime);
-	    }
+            transform.parent.transform.Rotate(dir);
+            //LookAtPlanet();
+        }
 
     }
  
     // member functions
     public void LookAtPlanet()
     {
-        transform.LookAt(Planet);
+        transform.LookAt(target);
     }
 }
