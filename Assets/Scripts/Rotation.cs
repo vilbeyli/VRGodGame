@@ -14,6 +14,8 @@ public class Rotation : MonoBehaviour {
  
     // public variables
     public float speed;
+    public Vector3 vect;
+    public bool world;
  
     //======================================
     // Function Definitions
@@ -31,19 +33,19 @@ public class Rotation : MonoBehaviour {
 	
 	}
 	
-	void Update () 
-    {
+	void Update ()
+	{
+	    Vector3 vec = vect*Time.deltaTime*speed;
 
-	    if (!HeadControls.MouseLook)
+	    if (world)
 	    {
-	        float dirY = Input.GetAxis("Horizontal");
-	        float dirX = Input.GetAxis("Vertical");
-	        Vector3 dir = new Vector3(dirX, dirY, 0);
-	        dir *= Time.deltaTime*speed;
-
-	        transform.Rotate(dir);
+            transform.Rotate(vec, Space.World);
 	    }
-    }
+	    else
+	    {
+            transform.Rotate(vec, Space.Self);
+	    }
+	}
  
     // member functions
 	

@@ -30,7 +30,7 @@ public class SettingsScript : MonoBehaviour {
 	
 	void Start () 
     {
-        HeadControls.MouseLook = GameObject.FindGameObjectWithTag("MouseLook Toggle").GetComponent<Toggle>().isOn;
+        //HeadControls.MouseLook = GameObject.FindGameObjectWithTag("MouseLook Toggle").GetComponent<Toggle>().isOn;
 	}
 	
 	void Update () 
@@ -39,15 +39,6 @@ public class SettingsScript : MonoBehaviour {
 	}
  
     // member functions
-    public void MouseLookToggle(bool val)
-    {
-        HeadControls.MouseLook = val;
 
-        // if mouse look is off (orbital movement)
-        if (!val)
-        {
-            _headControls.LookAtPlanet();
-        }
-    }
 
 }
