@@ -24,20 +24,9 @@ public class InputManager : MonoBehaviour {
     // getters & setters
  
     // unity functions
-	void Awake ()
-	{
-	
-	}
-	
-	void Start () 
-    {
-	
-	}
-	
 	void Update ()
 	{
-    
-	    ReadKeyboardInput();
+	    ReadKeyboardInput();    // will be removed after VR controls are implemented
 	}
 
     private void ReadKeyboardInput()
@@ -53,6 +42,4 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    // member functions
-	
 }

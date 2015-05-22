@@ -44,35 +44,20 @@ public class HeadControls : MonoBehaviour {
     {
 	    if (_gameManager.State == GameManager.GameState.Play)
 	    {
-	        
-
 	        switch (_viewMode)
 	        {
 	            case ViewMode.Planet:
-                    // Orbit Around
-
-                    // Rotating parent makes it look like the camera is orbiting the planet. (there might be issues?)
-                    // This tutorial can be followed to make it work using just another way:
-                    // https://www.youtube.com/watch?v=TdjoQB43EsQ
-                    float axisY = Input.GetAxis("Horizontal");
-	                float axisX = Input.GetAxis("Vertical");
-
-                    Vector3 dir = new Vector3(axisX, axisY, 0);
-	                dir *= Time.deltaTime*_sensivity;
-
-                    _viewCamera.parent.transform.Rotate(dir);
+	                PlanetView();       // Orbit Around Planet
 	                break;
-                case ViewMode.Inventory:
 
+                case ViewMode.Inventory:
+	                InventoryView();    // Stand Still
 	                break;
 	        }
-	        
-	        
-	    }
-
+	    }   
     }
  
-    // member functions
+    // public member functions
     public void LookAtPlanet()
     {
         _viewCamera.LookAt(_target);
@@ -83,6 +68,27 @@ public class HeadControls : MonoBehaviour {
         if (_viewMode == ViewMode.Planet)   _viewMode = ViewMode.Inventory;
         else                                _viewMode = ViewMode.Planet;;
 
-        _viewModeText.text = _viewMode == ViewMode.Planet ? "View Mode: Planet" : "View Mode: Inventory";
+        _viewModeText.text = "View Mode: " + (_viewMode == ViewMode.Planet ? "Planet" : "Inventory");
+    }
+
+    // private member functions
+    private void PlanetView()
+    {
+        // Rotating parent object makes it look like the camera is orbiting the planet. 
+        // (there might be issues?) This tutorial can be followed to make it work using 
+        // just another way: https://www.youtube.com/watch?v=TdjoQB43EsQ
+        float axisY = Input.GetAxis("Horizontal");
+        float axisX = Input.GetAxis("Vertical");
+        
+        Vector3 rotation = new Vector3(axisX, axisY, 0);    // player input component of the rotation
+        rotation *= Time.deltaTime * _sensivity;            // some fine tuning too
+
+        _viewCamera.parent.transform.Rotate(rotation);      // action!
+    }
+
+    private void InventoryView()
+    {
+        // Still camera - interactions with objects on the planet - inventory
+        // TODO: follow trello for implementation details
     }
 }
